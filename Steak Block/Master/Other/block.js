@@ -385,6 +385,52 @@ return script.callReturn()
 }) ////////////0.5(onlythis)//
 
 ////////////////////
+
+ddBlock('post_qna', '%1 제목과 %2 내용의 글을 노하우&팁에 올리기%3', {
+color: EntryStatic.colorSet.block.default.HARDWAR,
+outerLine: EntryStatic.colorSet.block.darken.HARDWAR
+}, {
+params: [
+{
+type: 'Block',
+accept: 'string'
+},
+{
+type: 'Block',
+accept: 'string'
+},
+{
+type: 'Indicator',
+img: 'block_icon/hardware_icon.svg',
+size: 11,
+}
+],
+def: [
+{
+type: 'text',
+params: [`이것을 알려드릴께요!`]
+},
+{
+type: 'text',
+params: [`한 번 따라해보세요~`]
+},
+null
+],
+map: {
+TITLE: 0,
+CONTENT: 1
+}
+}, 'text', (sprite, script) => {confirm("이 작품이 노하우&팁에 글을 올릴려고 합니다. 허락하시나요? (허락한 이상 본인에게 책임이 있습니다)")
+fetch('https://playentry.org/ds#!/tips/write', {
+method: 'POST',
+body: `{ "images": [], "category": "qna", "title": "${script.getValue('TITLE', script)}", "content": "${script.getValue('CONTENT', script)}", "groupNotice": false }`,
+headers: {
+'Content-Type': 'application/json'
+}
+})
+return script.callReturn()
+}) /////////////0.3//
+
 addBlock('post_qna', '%1 제목과 %2 내용의 글을 묻고답하기에 올리기%3', {
 color: EntryStatic.colorSet.block.default.HARDWAR,
 outerLine: EntryStatic.colorSet.block.darken.HARDWAR
@@ -421,51 +467,6 @@ CONTENT: 1
 }
 }, 'text', (sprite, script) => {confirm("이 작품이 묻고답하기에 글을 올릴려고 합니다. 허락하시나요? (허락한 이상 본인에게 책임이 있습니다)")
 fetch('https://playentry.org/api/discuss/', {
-method: 'POST',
-body: `{ "images": [], "category": "qna", "title": "${script.getValue('TITLE', script)}", "content": "${script.getValue('CONTENT', script)}", "groupNotice": false }`,
-headers: {
-'Content-Type': 'application/json'
-}
-})
-return script.callReturn()
-}) /////////////0.3//
-
-ddBlock('post_qna', '%1 제목과 %2 내용의 글을 묻고답하기에 올리기%3', {
-color: EntryStatic.colorSet.block.default.HARDWAR,
-outerLine: EntryStatic.colorSet.block.darken.HARDWAR
-}, {
-params: [
-{
-type: 'Block',
-accept: 'string'
-},
-{
-type: 'Block',
-accept: 'string'
-},
-{
-type: 'Indicator',
-img: 'block_icon/hardware_icon.svg',
-size: 11,
-}
-],
-def: [
-{
-type: 'text',
-params: [`이것을 알려드릴께요!`]
-},
-{
-type: 'text',
-params: [`한 번 따라해보세요~`]
-},
-null
-],
-map: {
-TITLE: 0,
-CONTENT: 1
-}
-}, 'text', (sprite, script) => {confirm("이 작품이 노하우&팁에 글을 올릴려고 합니다. 허락하시나요? (허락한 이상 본인에게 책임이 있습니다)")
-fetch('https://playentry.org/ds#!/tips/write', {
 method: 'POST',
 body: `{ "images": [], "category": "qna", "title": "${script.getValue('TITLE', script)}", "content": "${script.getValue('CONTENT', script)}", "groupNotice": false }`,
 headers: {
